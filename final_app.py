@@ -8,9 +8,7 @@ import warnings
 warnings.filterwarnings("ignore")
 st.set_page_config(page_title="Amazon India BI Capstone", layout="wide")
 
-# =====================================================
 # PERFECTED UI STYLING
-# =====================================================
 st.markdown("""
 <style>
     .stApp { background-color: #E3E6E6; }
@@ -55,9 +53,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# =====================================================
 # DATA ENGINE (ROBUST GENERATION)
-# =====================================================
 @st.cache_data
 def get_clean_data():
     np.random.seed(42)
@@ -80,15 +76,11 @@ def get_clean_data():
 
 df = get_clean_data()
 
-# =====================================================
 # SIDEBAR
-# =====================================================
 st.sidebar.markdown('<div class="logo-container"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" width="120"></div>', unsafe_allow_html=True)
 page = st.sidebar.radio("Navigation", ["Executive Summary", "Revenue Deep-Dive", "20 EDA Insights", "30 Business Q&A", "Data Model Strategy"])
 
-# =====================================================
 # 1. EXECUTIVE SUMMARY
-# =====================================================
 if page == "Executive Summary":
     st.markdown('<h1 class="main-title">🚀 Amazon India Executive Summary</h1>', unsafe_allow_html=True)
     c1, c2, c3, c4 = st.columns(4)
@@ -99,9 +91,7 @@ if page == "Executive Summary":
     
     st.plotly_chart(px.line(df.resample('M', on='date').sales.sum().reset_index(), x='date', y='sales', title="Revenue Pulse (Monthly Trend)", template="plotly_white", color_discrete_sequence=['#FF9900']), use_container_width=True)
 
-# =====================================================
 # 2. REVENUE DEEP-DIVE
-# =====================================================
 elif page == "Revenue Deep-Dive":
     st.markdown('<h1 class="main-title">💰 Revenue & Performance Analysis</h1>', unsafe_allow_html=True)
     col1, col2 = st.columns(2)
@@ -109,9 +99,7 @@ elif page == "Revenue Deep-Dive":
         st.plotly_chart(px.pie(df, values='sales', names='category', hole=0.5, title="Revenue by Category", template="plotly_white"), use_container_width=True)
     with col2:
         st.plotly_chart(px.box(df, x='city', y='sales', color='city', title="Sales Velocity by City", template="plotly_white"), use_container_width=True)
-# =====================================================
 # 3. 20 EDA INSIGHTS (FINAL – DARK LEGEND & AXIS)
-# =====================================================
 elif page == "20 EDA Insights":
 
     st.markdown('<h1 class="main-title">📈 20 Key Exploratory Insights</h1>',
@@ -262,10 +250,8 @@ elif page == "20 EDA Insights":
             st.plotly_chart(fig, use_container_width=True)
 
 
-
-# =====================================================
 # 4. 30 BUSINESS Q&A (ALL 30 ANSWERED)
-# =====================================================
+
 elif page == "30 Business Q&A":
     st.markdown('<h1 class="main-title">📋 30 Business Requirement Answers</h1>', unsafe_allow_html=True)
     q_cols = st.columns(2)
@@ -308,9 +294,8 @@ elif page == "30 Business Q&A":
         with target:
             st.markdown(f'<div class="q-card"><b>Q{i}:</b> {a}</div>', unsafe_allow_html=True)
 
-# =====================================================
 # 5. DATA MODEL STRATEGY (CLEAR UI)
-# =====================================================
+
 elif page == "Data Model Strategy":
     st.markdown('<h1 class="main-title">🗄️ 4-Table Star Schema Architecture</h1>', unsafe_allow_html=True)
     
@@ -334,4 +319,5 @@ elif page == "Data Model Strategy":
         st.dataframe(time_table, use_container_width=True)
 
 st.sidebar.markdown("---")
+
 st.sidebar.caption("Amazon BI Capstone v2.1")
